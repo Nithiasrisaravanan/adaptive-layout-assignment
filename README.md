@@ -88,7 +88,7 @@ processed from *lowest* priority to *highest*. A `required`, non-hideable elemen
 
 Every layout decision — what goes where, what size, what disappears — is made in plain TypeScript **before** any pixel is drawn. There are no media queries anywhere in this codebase. The DOM renderer (`src/renderers/dom`) does exactly one thing: paint the rect it's handed. It never decides position, size, visibility, or font size — all of that already exists on the resolved data by the time the renderer sees it. A Canvas renderer could consume the exact same output type and require zero engine changes.
 
-## The debugging story (honestly documented)
+## The debugging story 
 
 Three real bugs were found and fixed during development — not by inspection, but by the automated stress-test suite and by actually looking at the running demo:
 
@@ -104,17 +104,17 @@ All three are written up in detail — root cause, fix, and reasoning — in `IN
 
 ## Known limitations
 
-- No text-measurement-aware wrapping — font size and truncation are decided from box geometry, not real glyph metrics. Long text truncates with an ellipsis rather than wrapping.
-- Image and logo elements render as labeled placeholder boxes (alt text + resolved dimensions), not real photography — this project is a layout algorithm, not an asset pipeline, and the placeholder is more useful to a reviewer than a real photo would be (it shows exactly what the resolver decided).
+- No text-measurement-aware wrapping font size and truncation are decided from box geometry, not real glyph metrics. Long text truncates with an ellipsis rather than wrapping.
+- Image and logo elements render as labeled placeholder boxes (alt text + resolved dimensions), not real photography this project is a layout algorithm, not an asset pipeline, and the placeholder is more useful to a reviewer than a real photo would be (it shows exactly what the resolver decided).
 - No animated transition between surfaces.
 - Groups can only be repositioned as a whole; individual members can't be pulled out to free space independently.
 
 ## AI usage disclosure
 
-This project was built with Claude (Anthropic) as a hands-on pair programmer: it wrote the initial implementation of every file, then iteratively type-checked, linted, and ran the test suite after each change — fixing the three real bugs listed above when the suite (and, in one case, manual inspection of the running demo) surfaced them. Architectural decisions — folding surface constraints into effective minimums, choosing a priority-ordered greedy resolver over a general solver, the axis-selection rule, the group-stacking model — were made deliberately against the assignment's stated evaluation criteria and are explained in full in `ARCHITECTURE.md`.
+This project was built with Anthropic as a hands-on pair programmer: it wrote the initial implementation of every file, then iteratively type-checked, linted, and ran the test suite after each change fixing the three real bugs listed above when the suite (and, in one case, manual inspection of the running demo) surfaced them. Architectural decisions folding surface constraints into effective minimums, choosing a priority-ordered greedy resolver over a general solver, the axis-selection rule, the group-stacking model were made deliberately against the assignment's stated evaluation criteria and are explained in full in `ARCHITECTURE.md`.
 
 ## Time spent
 
-One focused build session: domain modeling and geometry primitives first, then the resolver pipeline (built and debugged against the automated test suite), then the demo application, then documentation — followed by a second pass fixing the three issues above after actually running and looking at the demo.
+One focused build session: domain modeling and geometry primitives first, then the resolver pipeline (built and debugged against the automated test suite), then the demo application, then documentation followed by a second pass fixing the three issues above after actually running and looking at the demo.
 
 
